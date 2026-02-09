@@ -11,7 +11,8 @@ jobs:
       contents: read
       security-events: write
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Set up Java
         uses: actions/setup-java@v3
@@ -22,9 +23,5 @@ jobs:
       - name: Submit Maven Dependency Snapshot
         uses: advanced-security/maven-dependency-submission-action@v1
         with:
-          directory: ./APIFramework
+          directory: ./APIframework  # match folder name exactly
           token: ${{ secrets.GITHUB_TOKEN }}
-
-    
-
-          
