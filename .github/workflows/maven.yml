@@ -23,5 +23,11 @@ jobs:
       - name: Submit Maven Dependency Snapshot
         uses: advanced-security/maven-dependency-submission-action@v1
         with:
-          directory: .  # match folder name exactly
+          directory: ./APIframework   # folder containing pom.xml
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Maven Project
+        run: mvn clean install -f ./APIframework/pom.xml
+
+      - name: Analyze dependencies
+        run: mvn dependency:tree -f ./APIframework/pom.xml
