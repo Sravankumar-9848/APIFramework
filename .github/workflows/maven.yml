@@ -1,15 +1,12 @@
-name: Maven Dependency Submission
+name: Maven Build and Dependencies
 
 on:
   push:
     branches: [ master ]
 
 jobs:
-  dependency-submission:
+  build-and-deps:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      security-events: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -20,14 +17,11 @@ jobs:
           distribution: temurin
           java-version: 11
 
-      - name: Submit Maven Dependency Snapshot
-        uses: advanced-security/maven-dependency-submission-action@v1
-        with:
-          directory: ./APIframework   # folder containing pom.xml
-          token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Build Maven Project
         run: mvn clean install -f ./APIframework/pom.xml
 
       - name: Analyze dependencies
         run: mvn dependency:tree -f ./APIframework/pom.xml
+
+      - name: Execute test cases
+        run: mvn clean test -Dsuite=suite -f ./APIframework/pom.xml
