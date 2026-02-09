@@ -24,4 +24,4 @@ jobs:
         run: mvn dependency:tree -f ./APIframework/pom.xml
 
       - name: Execute test cases
-        run: mvn clean test -Dsuite=suite -f ./APIframework/pom.xml
+        run: mvn clean test -Dsuite=suite 
